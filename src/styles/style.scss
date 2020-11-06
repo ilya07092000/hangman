@@ -64,5 +64,22 @@ main {
     margin-right: 10px;
     padding: 5px 10px;
     cursor: pointer;
+    position: relative;
+    user-select: none;
   }
+}
+
+.cross {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: no-repeat center / 80% url('../img/times-solid.svg');
+  opacity: .7;
+  display: none;
+}
+
+.alphabet__letter.disabled .cross {
+  display: block;
 }
