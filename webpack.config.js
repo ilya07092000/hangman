@@ -13,7 +13,7 @@ const PATHS = {
 
 module.exports = {
     entry: {
-        main: ['babel-polyfill', PATHS.src + '/script.js']
+        main: ['babel-polyfill', PATHS.src + '/js/script.js']
     },
     output: {
         path: PATHS.dist,

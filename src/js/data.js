@@ -1,0 +1,2 @@
+export const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+export const words = ['mercedes', 'bmw', 'bentley', 'audi', 'bugatti', 'cadilac', 'ford', 'nissan', 'tesla', 'hyundai', 'infinity', 'hummer', 'honda', 'kia', 'mitsubishi', 'lexus', 'open', 'subaru', 'suzuki', 'toyota', 'volvo', 'seat', 'skoda', 'smart', 'porsche', 'maserati', 'lamborgini', 'jeep', 'jaguar', 'dodge'];
