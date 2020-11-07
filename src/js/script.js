@@ -7,17 +7,20 @@ let wordPlace = document.querySelector('.word'); // Place for word to guess
 
 class GameSpace {
     constructor() {
-        this._word =  '';
-        this.firstLetterIndex = '';
-        this.lettersToGuess = '';
+        this._word =  ''; // PLACE FOR RANDOM WORD
+        this.checkInsertion = ''; // PLACE FOR CHECK LETTERS
+        this.guessedLetters = ''; // PLACE FOR GUESSED LETTERS
     }
 
     randomWord() {
-        this._word = words[Math.floor(Math.random() * 30)];
+        this.setRandomWord = words[Math.floor(Math.random() * 30)].split(''); // FIND RADOM WORD
+
+        this.checkInsertion = [...this.getRandomWord];
+        this.guessedLetters = new Array(this.getRandomWord.length); // MAKE ARRAY FOR GUESSED LETTERS
     }
 
     initAlphabet() {
-        lettersBlock.textContent = '';
+        lettersBlock.textContent = ''; // CLEAR ALPHABET
         alphabet.forEach(item => lettersBlock.insertAdjacentHTML( // insert aplphabet
             'beforeend',
             `<div class="alphabet__letter" data-letter="${item}">
@@ -28,26 +31,34 @@ class GameSpace {
     }
 
     initWordPlace() {
-        wordPlace.textContent = '';
-        let word = this.getRandomWord.split('');
+        wordPlace.textContent = ''; // CLEAR CONTENT IN LETTERS FIELD
+        let word = this.getRandomWord;
         word.forEach(item => wordPlace.insertAdjacentHTML(
             'beforeend',
             '<div class="word-place"></div>'
         ))
     }
 
-    fillRandomLetter() {
+    fillRandomLetter(n) {
         let lettersToGuess = [...document.querySelectorAll('.word-place')]; // LETTERS TO GUESS
-        let randomLetterIndex = Math.floor(Math.random() * lettersToGuess.length);
-        lettersToGuess[randomLetterIndex].textContent = this.getRandomWord[randomLetterIndex];
-        this.firstLetterIndex = randomLetterIndex;
+        
+        for(let i = 0; i < n; i++) {
+                let randomIndex = Math.floor(Math.random() * this.checkInsertion.length);
 
-        let nWord = this._word.split('');
-        nWord[randomLetterIndex] = null;
-        this.setRandomWord = nWord;
+                while(lettersToGuess[randomIndex].textContent) {
+                    randomIndex = Math.floor(Math.random() * this.checkInsertion.length);
+                }
 
-        if(!this.getRandomWord.includes(lettersToGuess[randomLetterIndex].textContent)) {
-            closeLetter(lettersToGuess[randomLetterIndex].textContent);
+                let randomLetter = this.checkInsertion[randomIndex];
+                lettersToGuess[randomIndex].textContent = this.checkInsertion[randomIndex];
+
+                this.checkInsertion[randomIndex] = null;
+
+                this.guessedLetters[randomIndex] = randomLetter;
+
+                if(!this.checkInsertion.includes(randomLetter)) {
+                    closeLetter(lettersToGuess[randomIndex].textContent);
+                }
         }
     }
 
@@ -57,10 +68,6 @@ class GameSpace {
 
     set setRandomWord(value) {
         this._word = value;
-    }
-
-    set letterToGuessSetter(arr) {
-        this.lettersToGuess = arr;
     }
 }
 
@@ -73,12 +80,18 @@ class App {
         game.initAlphabet();
         game.randomWord();
         game.initWordPlace();
-        game.fillRandomLetter();
-        game.letterToGuessSetter = [...document.querySelectorAll('.word-place')];
-        this.randomWord = game.getRandomWord;
+
+        if(game.getRandomWord.length <= 3) {
+            game.fillRandomLetter(1);
+        } else if(game.getRandomWord.length > 3) {
+            game.fillRandomLetter(2);
+        } 
+
+        this.lettersToGuess = [...document.querySelectorAll('.word-place')]; // LETTERS TO GUESS
     }
 }
 App.init();
+
 
 lettersBlock.addEventListener('click', guesLetter);
 
@@ -86,13 +99,23 @@ function guesLetter(event) {
     let letter = event.target.dataset.letter;
     if(!letter) return;
 
-    if(App.randomWord.includes(letter)) {
-        let letterIndex = App.randomWord.findIndex(item => item == letter);
-        App.game.lettersToGuess[letterIndex].textContent = letter;
-        App.randomWord[letterIndex] = null;
+    if(App.game.checkInsertion.includes(letter)) {
+        let letterIndex = App.game.checkInsertion.findIndex(item => item == letter);
 
-        if(!App.randomWord.includes(letter)) {
+        App.game.guessedLetters[letterIndex] = letter;
+
+        App.lettersToGuess[letterIndex].textContent = letter;
+        App.game.checkInsertion[letterIndex] = null;
+
+        if(!App.game.checkInsertion.includes(letter)) {
             closeLetter(letter);
+        }
+
+        if(App.game.guessedLetters.join('') == App.game.getRandomWord.join('')) {
+           setTimeout(() => {
+            alert('GG')
+            App.init()
+           }, 0)
         }
     }
 }
@@ -102,8 +125,6 @@ function closeLetter(letter) {
     let currentLetter = alphabet.find(item => item.dataset.letter == letter);
     currentLetter.classList.add('disabled');
 }
-
-
 
 let reloadBtn = document.querySelector('.reload');
 reloadBtn.addEventListener('click', () => {
@@ -190,3 +211,4 @@ ctx.beginPath();
 ctx.moveTo(150, 280)
 ctx.lineTo(180, 350)
 ctx.stroke();
+
