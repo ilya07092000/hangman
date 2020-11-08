@@ -84,6 +84,15 @@ main {
   display: block;
 }
 
+.alphabet__letter {
+  transition: .2s linear opacity, .1s linear transform;
+}
+
+.alphabet__letter.false {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
 #canvas {
   display: block;
   margin: 0 auto;
