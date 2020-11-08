@@ -61,35 +61,35 @@ class GameSpace {
         for(let i = 0; i < n; i++) {
                 let randomIndex = Math.floor(Math.random() * this.checkInsertion.length);
 
-                while(lettersToGuess[randomIndex].textContent) {
+                while(lettersToGuess[randomIndex].textContent) { // PREVENT SAME RANDOM INDEX
                     randomIndex = Math.floor(Math.random() * this.checkInsertion.length);
                 }
 
                 let randomLetter = this.checkInsertion[randomIndex];
-                lettersToGuess[randomIndex].textContent = this.checkInsertion[randomIndex];
+                lettersToGuess[randomIndex].textContent = this.checkInsertion[randomIndex]; // INSERT RANDOM LETTER
 
-                this.checkInsertion[randomIndex] = null;
+                this.checkInsertion[randomIndex] = null; // REMOVE RANDOM LETTER FROM WORD
 
-                this.guessedLetters[randomIndex] = randomLetter;
+                this.guessedLetters[randomIndex] = randomLetter; // ADD RANDOM LETTER AS GUESSED
 
-                if(!this.checkInsertion.includes(randomLetter)) {
-                    closeLetter(lettersToGuess[randomIndex].textContent);
+                if(!this.checkInsertion.includes(randomLetter)) { // CHECK IF THIS RANDOM LETTER IS IN THE WORD
+                    closeLetter(lettersToGuess[randomIndex].textContent); // REMOVE LETTER FROM APLPABET
                 }
         }
     }
 
-    get getRandomWord() {
-        return this._word;
+    get getRandomWord() { // GETTER FOR WORD
+        return this._word; 
     }
 
-    set setRandomWord(value) {
+    set setRandomWord(value) { // SETTER FOR WORD
         this._word = value;
     }
 }
 
 
 class App {
-    static init() {
+    static init() { // TO INIT OR RE-INIT GAME
         let game = new GameSpace();
         this.game = game;
 
@@ -97,7 +97,7 @@ class App {
         game.randomWord();
         game.initWordPlace();
 
-        if(game.getRandomWord.length <= 3) {
+        if(game.getRandomWord.length <= 3) { // HOW MANY LETTER FORESEEN
             game.fillRandomLetter(1);
         } else if(game.getRandomWord.length > 3) {
             game.fillRandomLetter(2);
@@ -110,7 +110,6 @@ class App {
 }
 App.init();
 
-
 lettersBlock.addEventListener('click', guesLetter);
 
 function guesLetter(event) {
@@ -118,24 +117,24 @@ function guesLetter(event) {
     if(!letter) return;
 
     if(App.game.checkInsertion.includes(letter)) {
-        let letterIndex = App.game.checkInsertion.findIndex(item => item == letter);
+        let letterIndex = App.game.checkInsertion.findIndex(item => item == letter); // FIND LETTER IN WORD
 
-        App.game.guessedLetters[letterIndex] = letter;
+        App.game.guessedLetters[letterIndex] = letter; // ADD LETTER IN GUESSED LETTERS
 
         App.lettersToGuess[letterIndex].textContent = letter;
         App.game.checkInsertion[letterIndex] = null;
 
-        if(!App.game.checkInsertion.includes(letter)) {
+        if(!App.game.checkInsertion.includes(letter)) { // CHECK IF WE HAVE THE SAME LETTER IN WORD
             closeLetter(letter);
         }
 
-        if(App.game.guessedLetters.join('') == App.game.getRandomWord.join('')) {
+        if(App.game.guessedLetters.join('') == App.game.getRandomWord.join('')) { // CHECK IF WE GUESS THE WORD
             modalShow('win')
         }
         return
     }
     else {
-        App.game.fall++;
+        App.game.fall++; // +1 TO BAD ATTEMPT
 
         event.target.classList.add('false');
         
