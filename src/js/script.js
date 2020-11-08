@@ -5,8 +5,16 @@ import {alphabet, words} from './data.js'
 let lettersBlock = document.querySelector('.alphabet'); // Block with letters (Alphabet)
 let wordPlace = document.querySelector('.word'); // Place for word to guess
 
+// CANVAS
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
+let canvasWidth = canvas.width;
+let canvasHeight = canvas.height;
+
+window.addEventListener("resize", () => {
+    canvasWidth = canvas.width;
+    canvasHeight = canvas.height;
+});
 
 // MODAL WINDOW
 let modalOverlay = document.querySelector('.modal__overlay');
@@ -136,18 +144,39 @@ function guesLetter(event) {
                 ctx.lineWidth = 4;
                 //Нижняя дуга
                 ctx.beginPath();
-                ctx.bezierCurveTo(200, 400, 320, 380, 420, 400); 
+                ctx.bezierCurveTo(
+                    canvasWidth / 2.4, 
+                    canvasHeight / 1.25, 
+                    canvasWidth / 1.5, 
+                    canvasHeight / 1.31, 
+                    canvasWidth / 1.14, 
+                    canvasHeight / 1.25
+                    ); 
                 ctx.stroke()
 
                 //Основа ( палка )
                 ctx.beginPath();
-                ctx.bezierCurveTo(310, 385, 320, 200, 310, 100); 
+                ctx.bezierCurveTo(
+                    canvasWidth / 1.54, 
+                    canvasHeight / 1.29, 
+                    canvasWidth / 1.5, 
+                    canvasHeight / 2.5, 
+                    canvasWidth / 1.54, 
+                    canvasHeight / 5
+                    ); 
                 ctx.stroke();
                 break;
             case 2:
                 // Верхняя палка
                 ctx.beginPath();
-                ctx.bezierCurveTo(312, 100, 250, 90, 130, 100); 
+                ctx.bezierCurveTo(
+                    canvasWidth / 1.53, 
+                    canvasHeight / 5, 
+                    canvasWidth / 1.92,
+                    canvasHeight / 5.5, 
+                    canvasWidth / 3.69, 
+                    canvasHeight / 5
+                    ); 
                 ctx.stroke();
                 break;
             case 3:
@@ -155,65 +184,85 @@ function guesLetter(event) {
 
                 //Веревка
                 ctx.beginPath();
-                ctx.bezierCurveTo(150, 100, 148, 130, 150, 160); 
+                ctx.bezierCurveTo(
+                    canvasWidth / 3.2, 
+                    canvasHeight / 5, 
+                    canvasWidth / 3.243, 
+                    canvasHeight / 3.84, 
+                    canvasWidth / 3.2, 
+                    canvasHeight / 3.125
+                    ); 
                 ctx.stroke();
                 break;
             case 4:
                 // Голова
                 ctx.beginPath();
-                ctx.arc(150,185,26,0,Math.PI*2,true);
+                ctx.arc(
+                    canvasWidth / 3.2,
+                    canvasHeight / 2.7,
+                    canvasWidth / 19.2,
+                    0,
+                    Math.PI*2,
+                    true);
 
                 // Левый глаз (крест)
-                ctx.moveTo(138, 175);
-                ctx.lineTo(145, 180);
-                ctx.moveTo(145, 175);
-                ctx.lineTo(138, 180);
+                ctx.moveTo(canvasWidth / 3.47, canvasHeight / 2.85);
+                ctx.lineTo(canvasWidth / 3.31, canvasHeight / 2.77);
+                ctx.moveTo(canvasWidth / 3.31, canvasHeight / 2.85);
+                ctx.lineTo(canvasWidth / 3.47, canvasHeight / 2.77);
 
                 // Правый глаз (крест)
-                ctx.moveTo(160, 175);
-                ctx.lineTo(153, 180);
-                ctx.moveTo(153, 175);
-                ctx.lineTo(160, 180);
+                ctx.moveTo(canvasWidth / 3, canvasHeight / 2.85);
+                ctx.lineTo(canvasWidth / 3.13, canvasHeight / 2.77);
+                ctx.moveTo(canvasWidth / 3.13, canvasHeight / 2.85);
+                ctx.lineTo(canvasWidth / 3, canvasHeight / 2.77);
                 ctx.stroke();
 
                 // Рот
                 ctx.moveTo(0, 0);
                 ctx.beginPath();
-                ctx.bezierCurveTo(136, 195, 150, 185, 165, 195); 
+                ctx.bezierCurveTo(
+                    canvasWidth / 3.52, 
+                    canvasHeight / 2.56, 
+                    canvasWidth / 3.2, 
+                    canvasHeight / 2.7, 
+                    canvasWidth / 2.9, 
+                    canvasHeight / 2.56
+                    ); 
                 ctx.stroke();
                 break;
             case 5: 
                 // Туловище
                 ctx.beginPath();
-                ctx.moveTo(150, 210)
-                ctx.lineTo(150, 280)
+                ctx.moveTo(canvasWidth / 3.2, canvasHeight / 2.38)
+                ctx.lineTo(canvasWidth / 3.2, canvasHeight / 1.78)
                 ctx.stroke();
 
                 // Левая рука
                 ctx.beginPath();
-                ctx.moveTo(150, 212)
-                ctx.lineTo(120, 240)
+                ctx.moveTo(canvasWidth / 3.2, canvasHeight / 2.35)
+                ctx.lineTo(canvasWidth / 4, canvasHeight / 2.083)
                 ctx.stroke();
 
                 // Правая рука
                 ctx.beginPath();
-                ctx.moveTo(150, 212)
-                ctx.lineTo(180, 240)
+                ctx.moveTo(canvasWidth / 3.2, canvasHeight / 2.35)
+                ctx.lineTo(canvasWidth / 2.66, canvasHeight / 2.083)
                 ctx.stroke();
                 break;
             case 6:
                 // Левая нога
                 ctx.beginPath();
-                ctx.moveTo(150, 280)
-                ctx.lineTo(130, 350)
+                ctx.moveTo(canvasWidth / 3.2, canvasHeight / 1.78)
+                ctx.lineTo(canvasWidth / 3.69, canvasHeight / 1.42)
                 ctx.stroke();
 
                 // Правая нога
                 ctx.beginPath();
-                ctx.moveTo(150, 280)
-                ctx.lineTo(180, 350)
+                ctx.moveTo(canvasWidth / 3.2, canvasHeight / 1.78)
+                ctx.lineTo(canvasWidth / 2.66, canvasHeight / 1.42)
                 ctx.stroke();
-                modalShow('lose')
+                modalShow('lose');
                 break;
         }
     }
@@ -224,12 +273,6 @@ function closeLetter(letter) {
     let currentLetter = alphabet.find(item => item.dataset.letter == letter);
     currentLetter.classList.add('disabled');
 }
-
-let reloadBtn = document.querySelector('.reload');
-reloadBtn.addEventListener('click', () => {
-    App.init();
-})
-
 
 function modalShow(result) {
     let content = ``;

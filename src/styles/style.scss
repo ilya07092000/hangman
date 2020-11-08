@@ -26,6 +26,7 @@ main {
   min-height: 100vh;
   background: url('../img/bg.jpg');
   position: relative;
+  overflow-x: hidden;
 }
 
 .title {
@@ -153,4 +154,22 @@ main {
   opacity: 1;
   position: static;
   transform: translateY(0);
+}
+
+
+@media(max-width: 570px) {
+  #canvas {
+    width: 400px;
+    height: 420px;
+  }
+  .title {
+    padding-top: 20px;
+  }
+}
+
+@media(max-width: 450px) {
+  #canvas {
+    width: 320px;
+    height: 340px;
+  }
 }
