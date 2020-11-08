@@ -8,6 +8,10 @@ let wordPlace = document.querySelector('.word'); // Place for word to guess
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
+// MODAL WINDOW
+let modalOverlay = document.querySelector('.modal__overlay');
+let modal = document.querySelector('.modal');
+
 class GameSpace {
     constructor() {
         this._word =  ''; // PLACE FOR RANDOM WORD
@@ -118,10 +122,7 @@ function guesLetter(event) {
         }
 
         if(App.game.guessedLetters.join('') == App.game.getRandomWord.join('')) {
-           setTimeout(() => {
-            alert('GG')
-            App.init()
-           }, 0)
+            modalShow('win')
         }
         return
     }
@@ -212,6 +213,7 @@ function guesLetter(event) {
                 ctx.moveTo(150, 280)
                 ctx.lineTo(180, 350)
                 ctx.stroke();
+                modalShow('lose')
                 break;
         }
     }
@@ -227,6 +229,30 @@ let reloadBtn = document.querySelector('.reload');
 reloadBtn.addEventListener('click', () => {
     App.init();
 })
+
+
+function modalShow(result) {
+    let content = ``;
+    if(result == 'win') {
+        content = `
+            <h2 class="win">You win</h2>
+            <p>It was ${App.game.getRandomWord.join('')}</p>
+        `
+        modal.innerHTML  = content;
+        modalOverlay.classList.add('active')
+    } else {
+        content = `
+            <h2 class="lose">You lose</h2>
+            <p>It was ${App.game.getRandomWord.join('')}</p>
+        `
+        modal.innerHTML  = content;
+        modalOverlay.classList.add('active')
+    }
+    setTimeout(() => {
+        modalOverlay.classList.remove('active');
+        App.init();
+    }, 2000)
+}
 
 
 
